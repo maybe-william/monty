@@ -1,4 +1,4 @@
-#include "lists.h"
+#include "monty.h"
 /**
  * delete_dnodeint_at_index - deletes the node at index
  * @head: beginning of list

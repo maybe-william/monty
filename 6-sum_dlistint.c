@@ -1,4 +1,4 @@
-#include "lists.h"
+#include "monty.h"
 /**
  * sum_dlistint - function that returns the sum of all the data of linked list
  * @head: beginning of list
