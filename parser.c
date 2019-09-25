@@ -48,9 +48,9 @@ instruction_t get_op(int index)
 		ops[2].f = f1;
 		ops[3].f = f1;
 		ops[4].f = f1;
-		ops[5].f = f1;
-		ops[6].f = f1;
-		ops[7].f = f1;
+		ops[5].f = pop;
+		ops[6].f = pall;
+		ops[7].f = pint;
 		ops[8].f = f1;
 		ops[9].f = f1;
 		ops[10].f = f1;
@@ -75,7 +75,7 @@ int exec_push(char *str, stack_t **head, int linum)
 	int x = 0, digs = 0;
 	char num[20] = {'\0'};
 
-	(void)head;
+	(void)linum;
 	if (strncmp(str, "push", 4) == 0)
 	{
 		while (*(str + 5 + digs) > 47 && *(str + 5 + digs) < 58)
@@ -84,8 +84,8 @@ int exec_push(char *str, stack_t **head, int linum)
 		x = atoi(num);
 		if (x != -1)
 		{
-			printf("%d: PUSH %d\n", linum, x);
-			/*add_dint_node(head, x)*/
+
+			add_dnodeint(head, x);
 		}
 		else
 		{
@@ -134,6 +134,8 @@ int exec_comm(char *str, stack_t **head, int linum)
 	}
 	if ((strncmp(str, "nop", 3) == 0) || (str[0] == '#'))
 		return (0);
+	if (strncmp(str, "push", 4) == 0)
+		return (0);
 	if ((str[0] == '\n') || (!(str[0])))
 		return (0);
 	return (-1);
@@ -147,16 +149,16 @@ int exec_comm(char *str, stack_t **head, int linum)
  */
 int main(int argc, char **argv)
 {
-	char *line;
+	char *line = NULL;
 	int red = 0, linum = 1, stat = 0, i = 0;
 	size_t length = 0;
-	FILE *fd;
+	FILE *fd = NULL;
 	stack_t *stack = NULL;
 
 	(void)argc;
 	fd = fopen(argv[1], "r");
 	/*NULL check here*/
-	while ((red = getline(&line, &length, fd)) != -1)
+	while (((red = getline(&line, &length, fd)) != -1) && stat != -1)
 	{
 		i = 0;
 
@@ -166,6 +168,12 @@ int main(int argc, char **argv)
 		stat = exec_comm(line + i, &stack, linum);
 		linum++;
 	}
+	if (stat == 1)
+		stat = 0;
+	if (stat == -1)
+		stat = 1;
+	free(line);
+	free_dlistint(stack);
 	fclose(fd);
 	return (stat);
 }
