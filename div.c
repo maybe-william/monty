@@ -13,7 +13,7 @@ void mydiv(stack_t **head, unsigned int linum)
 
         if (!head || !(dlistint_len(*head) > 2))
         {
-                div_error(linnum);
+                div_error(linum);
                 last_status(-1);
                 return;
         }
@@ -22,11 +22,11 @@ void mydiv(stack_t **head, unsigned int linum)
         y = get_dnodeint_at_index(*head, 1)->n;
 	if (y == 0)
 	{
-		div_zero_error(linnum);
+		div_zero_error(linum);
 		last_status(-1);
 		return;
 	}
-	z = x / y
+	z = x / y;
         get_dnodeint_at_index(*head, 1)->n = z;
 
         delete_dnodeint_at_index(head, 0);
