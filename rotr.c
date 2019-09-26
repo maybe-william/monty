@@ -1,10 +1,10 @@
 #include "monty.h"
 
 /**
- * swap - swap two values on the stack
+ * rotr - rotate the bottom of the stack to the top
  * @head: the stack
  * @linum: the line number
  */
-void swap(stack_t **head, unsigned int linum)
+void rotr(stack_t **head, unsigned int linum)
 {
 }

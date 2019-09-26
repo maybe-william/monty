@@ -1,10 +1,10 @@
 #include "monty.h"
 
 /**
- * swap - swap two values on the stack
+ * pchar - print the top value on the stack as a character
  * @head: the stack
  * @linum: the line number
  */
-void swap(stack_t **head, unsigned int linum)
+void pchar(stack_t **head, unsigned int linum)
 {
 }
