@@ -1,10 +1,10 @@
 #include "monty.h"
 
 /**
- * swap - swap two values on the stack
+ * pstr - print the values on the stack as a string
  * @head: the stack
  * @linum: the line number
  */
-void swap(stack_t **head, unsigned int linum)
+void pstr(stack_t **head, unsigned int linum)
 {
 }
