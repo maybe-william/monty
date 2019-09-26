@@ -43,21 +43,21 @@ instruction_t get_op(int index)
 		ops[13].opcode = "stack";
 		ops[14].opcode = "queue";
 		/*TODO: fill all function pointers*/
-		ops[0].f = f1;
-		ops[1].f = f1;
-		ops[2].f = f1;
-		ops[3].f = f1;
-		ops[4].f = f1;
-		ops[5].f = f1;
-		ops[6].f = f1;
-		ops[7].f = f1;
-		ops[8].f = f1;
-		ops[9].f = f1;
-		ops[10].f = f1;
-		ops[11].f = f1;
-		ops[12].f = f1;
-		ops[13].f = f1;
-		ops[14].f = f1;
+		ops[0].f = add;
+		ops[1].f = sub;
+		ops[2].f = mydiv;
+		ops[3].f = mul;
+		ops[4].f = mod;
+		ops[5].f = pop;
+		ops[6].f = pall;
+		ops[7].f = pint;
+		ops[8].f = swap;
+		ops[9].f = pstr;
+		ops[10].f = rotl;
+		ops[11].f = rotr;
+		ops[12].f = pchar;
+		ops[13].f = stack;
+		ops[14].f = queue;
 
 	}
 	return (ops[index]);
@@ -68,75 +68,77 @@ instruction_t get_op(int index)
  * @str: the line at the checkpoint
  * @head: the head of the stack
  * @linum: the current monty line number
- * Return: 0 if success, -1 if atoi fails (not pushing a number)
  */
-int exec_push(char *str, stack_t **head, int linum)
+void exec_push(char *str, stack_t **head, int linum)
 {
-	int x = 0, digs = 0;
-	char num[20] = {'\0'};
+	int x = 0;
 
-	(void)head;
 	if (strncmp(str, "push", 4) == 0)
 	{
-		while (*(str + 5 + digs) > 47 && *(str + 5 + digs) < 58)
-			digs++;
-		strncpy(num, str + 5, digs);
-		x = atoi(num);
+		x = get_push_int(str + 4);
 		if (x != -1)
 		{
-			printf("%d: PUSH %d\n", linum, x);
-			/*add_dint_node(head, x)*/
+			if (staq(0, 0))
+				add_dnodeint(head, x);
+			else
+				add_dnodeint_end(head, x);
 		}
 		else
 		{
-			return (-1);
+			push_error(linum);
+			last_status(-1);
+			return;
 		}
 	}
-	return (0);
+
 }
 
 /**
  * exec_comm - do a command for an opcode
- * @str: the string at a checkpoint
+ * @s: the string at a checkpoint
  * @head: the head of the stack
  * @linum: the monty line number
- * Return: 1 if success, 0 if nop or comment, -1 if error
  */
-int exec_comm(char *str, stack_t **head, int linum)
+void exec_comm(char *s, stack_t **head, int linum)
 {
-	int i = 0;
+	int i = 0, l = 0;
+	char inst[1024] = {'\0'};
 
 	for (i = 0; i <= 5; i++)
 	{
-		if (strncmp(get_op(i).opcode, str, 3) == 0)
+		if (strncmp(get_op(i).opcode, s, 3) == 0)
 		{
 			get_op(i).f(head, linum);
-			return (1);
+			return;
 		}
 	}
 	for (i = 6; i <= 11; i++)
 	{
-		if (strncmp(get_op(i).opcode, str, 4) == 0)
+		if (strncmp(get_op(i).opcode, s, 4) == 0)
 		{
 			get_op(i).f(head, linum);
-			return (1);
+			return;
 		}
 
 	}
 	for (i = 12; i <= 14; i++)
 	{
-		if (strncmp(get_op(i).opcode, str, 5) == 0)
+		if (strncmp(get_op(i).opcode, s, 5) == 0)
 		{
 			get_op(i).f(head, linum);
-			return (1);
+			return;
 		}
 
 	}
-	if ((strncmp(str, "nop", 3) == 0) || (str[0] == '#'))
-		return (0);
-	if ((str[0] == '\n') || (!(str[0])))
-		return (0);
-	return (-1);
+	if ((strncmp(s, "nop", 3) == 0) || (s[0] == '#'))
+		return;
+	if ((strncmp(s, "push", 4) == 0) || (s[0] == '\n') || (!(s[0])))
+		return;
+	while ((s[l] != '\n') && (s[l] != ' ') && (s[l] != 9) && (s[l]))
+		l++;
+	strncpy(inst, s, l);
+	inst_error(inst, linum);
+	last_status(-1);
 }
 
 /**
@@ -147,25 +149,43 @@ int exec_comm(char *str, stack_t **head, int linum)
  */
 int main(int argc, char **argv)
 {
-	char *line;
+	char *line = NULL;
 	int red = 0, linum = 1, stat = 0, i = 0;
 	size_t length = 0;
-	FILE *fd;
+	FILE *fd = NULL;
 	stack_t *stack = NULL;
 
-	(void)argc;
-	fd = fopen(argv[1], "r");
-	/*NULL check here*/
-	while ((red = getline(&line, &length, fd)) != -1)
+	fd = initialize_fd(argc, argv[1]);
+	staq(1, 0);
+	while (((red = getline(&line, &length, fd)) != -1) && stat != -1)
 	{
 		i = 0;
 
 		while (line[i] == ' ' || line[i] == '	')
 			i++;
 		exec_push(line + i, &stack, linum);
-		stat = exec_comm(line + i, &stack, linum);
+		if (last_status(0))
+		{
+			stat = -1;
+			break;
+		}
+		exec_comm(line + i, &stack, linum);
+		if (last_status(0))
+		{
+			stat = -1;
+			break;
+		}
 		linum++;
 	}
+	if (stat == 1)
+		stat = 0;
+	if (stat == -1)
+		stat = 1;
+	free(line);
+	free_dlistint(stack);
 	fclose(fd);
-	return (stat);
+	if (stat)
+		exit(EXIT_FAILURE);
+	else
+		exit(EXIT_SUCCESS);
 }
