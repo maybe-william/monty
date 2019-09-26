@@ -7,6 +7,11 @@
  */
 void pchar(stack_t **head, unsigned int linum)
 {
-	(void)head;
-	(void)linum;
+	if (!head || (*head->n < 32) || (*head > 127))
+	{
+		pchar_error(linum);
+		last_status(-1);
+		return;
+	}
+	printf("%c\n", *head->n);
 }
