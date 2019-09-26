@@ -7,4 +7,7 @@
  */
 void stack(stack_t **head, unsigned int linum)
 {
+	(void)head;
+	(void)linum;
+	staq(1, 0);
 }

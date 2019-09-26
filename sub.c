@@ -7,4 +7,6 @@
  */
 void sub(stack_t **head, unsigned int linum)
 {
+	(void)head;
+	(void)linum;
 }
