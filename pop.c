@@ -8,7 +8,7 @@
 void pop(stack_t **stack, unsigned int line_number)
 {
 	stack_t *hold = *stack;
-	
+
 	if (!stack || !(*stack))
 	{
 		pop_error(line_number);
