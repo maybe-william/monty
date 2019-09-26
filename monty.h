@@ -51,7 +51,23 @@ int delete_dnodeint_at_index(dlistint_t **head, unsigned int index);
 int last_status(int status);
 void error_mess(char *mess);
 int staq(int s, int q);
+FILE *initialize_fd(int argc, char *filename);
 
+void argv_error(void);
+void file_error(char *file);
+void inst_error(char *inst, unsigned int linum);
+void malloc_error(void);
+void push_error(unsigned int linum);
+void pint_error(unsigned int linum);
+void pop_error(unsigned int linum);
+void swap_error(unsigned int linum);
+void add_error(unsigned int linum);
+void sub_error(unsigned int linum);
+void div_error(unsigned int linum);
+void div_zero_error(unsigned int linum);
+void mul_error(unsigned int linum);
+void mod_error(unsigned int linum);
+void pchar_error(unsigned int linum, int mode);
 
 
 
@@ -61,7 +77,7 @@ void pop(stack_t **stack, unsigned int line_number);
 void swap(stack_t **stack, unsigned int line_number);
 void add(stack_t **stack, unsigned int line_number);
 void sub(stack_t **stack, unsigned int line_number);
-void div(stack_t **stack, unsigned int line_number);
+void mydiv(stack_t **stack, unsigned int line_number);
 void mul(stack_t **stack, unsigned int line_number);
 void mod(stack_t **stack, unsigned int line_number);
 void pchar(stack_t **stack, unsigned int line_number);

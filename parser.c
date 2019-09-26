@@ -155,9 +155,7 @@ int main(int argc, char **argv)
 	FILE *fd = NULL;
 	stack_t *stack = NULL;
 
-	(void)argc;
-	fd = fopen(argv[1], "r");
-	/*NULL check here*/
+	fd = initialize_fd(argc, argv[1]);
 	while (((red = getline(&line, &length, fd)) != -1) && stat != -1)
 	{
 		i = 0;
@@ -165,7 +163,17 @@ int main(int argc, char **argv)
 		while (line[i] == ' ' || line[i] == '	')
 			i++;
 		exec_push(line + i, &stack, linum);
-		stat = exec_comm(line + i, &stack, linum);
+		if (last_status(0))
+		{
+			stat = -1;
+			break;
+		}
+		exec_comm(line + i, &stack, linum);
+		if (last_status(0))
+		{
+			stat = -1;
+			break;
+		}
 		linum++;
 	}
 	if (stat == 1)
@@ -175,5 +183,8 @@ int main(int argc, char **argv)
 	free(line);
 	free_dlistint(stack);
 	fclose(fd);
-	return (stat);
+	if (stat)
+		exit(EXIT_FAILURE);
+	else
+		exit(EXIT_SUCCESS);
 }
