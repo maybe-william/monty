@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
+#include <unistd.h>
 
 
 
@@ -33,7 +33,7 @@ void error_mess(char *mess)
 	int len = 0;
 
 	len = strlen(mess);
-	write(stderr, mess, len);
+	write(STDERR_FILENO, mess, len);
 }
 
 
@@ -46,7 +46,7 @@ void error_mess(char *mess)
  */
 int staq(int s, int q)
 {
-	static sq;
+	static int sq;
 
 	if (s)
 		sq = 1;
@@ -56,3 +56,43 @@ int staq(int s, int q)
 	return (sq);
 }
 
+/**
+ * initialize_fd - either throw an error and exit, or initialize the fd
+ * @argc: the argcount
+ * @filename: the filename
+ * Return: the open fd if it worked
+ */
+FILE *initialize_fd(int argc, char *filename)
+{
+	char *memtest[10];
+	int i = 0;
+	FILE *ret = NULL;
+
+	if (argc != 2)
+	{
+		argv_error();
+		exit(EXIT_FAILURE);
+	}
+
+	ret = fopen(filename, "r");
+	if (!ret)
+	{
+		file_error(filename);
+		exit(EXIT_FAILURE);
+	}
+
+
+	for (i = 0; i < 10; i++)
+		memtest[i] = malloc(1000);
+	for (i = 0; i < 10; i++)
+		if (memtest[i])
+			free(memtest[i]);
+		else
+		{
+			malloc_error();
+			fclose(ret);
+			exit(EXIT_FAILURE);
+		}
+
+	return (ret);
+}

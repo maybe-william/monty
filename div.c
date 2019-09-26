@@ -5,6 +5,6 @@
  * @head: the stack
  * @linum: the line number
  */
-void div(stack_t **head, unsigned int linum)
+void mydiv(stack_t **head, unsigned int linum)
 {
 }
