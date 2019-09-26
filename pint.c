@@ -7,6 +7,13 @@
  */
 void pint(stack_t **stack, unsigned int line_number)
 {
-	(void)line_number;
+	if (!stack || !(*stack))
+	{
+		pint_error(line_number);
+		last_status(-1);
+		return;
+	}
+
+
 	printf("%d\n", (*stack)->n);
 }
