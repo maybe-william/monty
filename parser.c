@@ -71,16 +71,12 @@ instruction_t get_op(int index)
  */
 void exec_push(char *str, stack_t **head, int linum)
 {
-	int x = 0, digs = 0;
-	char num[20] = {'\0'};
+	int x = 0;
 
 	if (strncmp(str, "push", 4) == 0)
 	{
-		while (*(str + 5 + digs) > 47 && *(str + 5 + digs) < 58)
-			digs++;
-		strncpy(num, str + 5, digs);
-		x = atoi(num);
-		if (x != -1 && digs != 0)
+		x = get_push_int(str + 4);
+		if (x != -1)
 		{
 			if (staq(0, 0))
 				add_dnodeint(head, x);

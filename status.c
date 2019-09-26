@@ -5,7 +5,36 @@
 #include <unistd.h>
 
 
+/**
+ * get_push_int - get the int to push or -1
+ * @str: the start of the int parsing
+ * Return: atoi of the num or -1
+ */
+int get_push_int(char *str)
+{
+	char s[20] = {'\0'};
+	int off = 0, len = 0, pos = 1;
 
+	while (str[off] == ' ' || str[off] == 9)
+		off++;
+	if (str[off] == '-')
+	{
+		off++;
+		pos = 0;
+	}
+
+	while (str[off + len] > 47 && str[off + len] < 58)
+		len++;
+	if (!len)
+		return (-1);
+	if (!pos)
+	{
+		len = len + 1;
+		off = off - 1;
+	}
+	strncpy(s, str + off, len);
+	return (atoi(s));
+}
 
 
 
