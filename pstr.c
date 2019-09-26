@@ -7,6 +7,16 @@
  */
 void pstr(stack_t **head, unsigned int linum)
 {
-	(void)head;
+	int i;
 	(void)linum;
+
+	for (i = 0; (*head) != NULL; i++)
+	{
+		if ((*head)->n < 32 || (*head)->n > 127)
+		{
+			break;
+		}
+		printf("%c\n", (*head)->n);
+		(*head) = (*head)->next;
+	}
 }
