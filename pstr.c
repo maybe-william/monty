@@ -16,7 +16,8 @@ void pstr(stack_t **head, unsigned int linum)
 		{
 			break;
 		}
-		printf("%c\n", (*head)->n);
+		printf("%c", (*head)->n);
 		(*head) = (*head)->next;
 	}
+	printf("\n");
 }
