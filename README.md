@@ -10,6 +10,10 @@
 * Understand the proper way to use global variables
 * Understand how to work with git submodules
 
+## Compilation
+gcc 4.8.4 using the flags -Wall -Werror -Wextra and -pedantic<br/>
+___$ gcc -Wall -Werror -Wextra -pedantic *.c -o monty ___
+
 ## Files
 ---
 File|Description
@@ -44,11 +48,11 @@ sub.c | subtract two values on the stack
 sum_dlistint.c | function that returns the sum of all the data of linked list
 swap.c | swap two values on the stack
 
-Compiling
-gcc 4.8.4 using the flags -Wall -Werror -Wextra and -pedantic
-gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
+##Examples
 
-Examples
+## More Info
+All files are formatted in Betty style and checked using betty-style.pl and betty-doc.pl
+All header files are guarded
 
-Authors
+## Authors
 William Dyralnd-Marquis and Osama Basheer
