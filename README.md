@@ -6,6 +6,9 @@ An interpreter for Monty ByteCode files
 ## Compilation
 ___$ gcc ./*.c -o monty___
 
+## Usage
+___$ ./monty <montyfile>___
+
 ## Files
 ---
 File|Description
@@ -41,7 +44,13 @@ sum_dlistint.c | function that returns the sum of all the data of linked list
 swap.c | swap two values on the stack
 
 ## Examples
-Push 
+push: 
+  ```push -2346```
+pop:  
+  ```pop```
+swap:
+  ```swap```
+etc.
 
 ## More Info
 All files are formatted in Betty style and checked using betty-style.pl and betty-doc.pl
