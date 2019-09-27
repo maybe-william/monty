@@ -1,18 +1,10 @@
 # Stacks, Queues - LIFO, FIFO
 ---
 ## Description
-* An interpreter for Monty ByteCode files
-* Understand what LIFO and FIFO mean
-* Understand a stack, and when to use it
-* Understand a queue, and when to use it
-* Understand the common implementations of stacks and queues
-* Understand the most common use cases of stacks and queues
-* Understand the proper way to use global variables
-* Understand how to work with git submodules
+An interpreter for Monty ByteCode files
 
 ## Compilation
-gcc 4.8.4 using the flags -Wall -Werror -Wextra and -pedantic<br/>
-___$ gcc -Wall -Werror -Wextra -pedantic *.c -o monty ___
+___$ gcc ./*.c -o monty___
 
 ## Files
 ---
@@ -48,7 +40,8 @@ sub.c | subtract two values on the stack
 sum_dlistint.c | function that returns the sum of all the data of linked list
 swap.c | swap two values on the stack
 
-##Examples
+## Examples
+Push 
 
 ## More Info
 All files are formatted in Betty style and checked using betty-style.pl and betty-doc.pl
