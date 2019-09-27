@@ -45,11 +45,11 @@ swap.c | swap two values on the stack
 
 ## Examples
 push: 
-  ```push -2346```
+  ___push -2346___
 pop:  
-  ```pop```
+  ___pop___
 swap:
-  ```swap```
+  ___swap___
 etc.
 
 ## More Info
