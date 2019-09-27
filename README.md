@@ -7,7 +7,7 @@ An interpreter for Monty ByteCode files
 ___$ gcc ./*.c -o monty___
 
 ## Usage
-___$ ./monty <montyfile>___
+___$ ./monty montyfile___
 
 ## Files
 ---
