@@ -44,13 +44,13 @@ sum_dlistint.c | function that returns the sum of all the data of linked list
 swap.c | swap two values on the stack
 
 ## Examples
-push: 
-  ___push -2346___
+push:   
+  ___push -2346___  
 pop:  
-  ___pop___
-swap:
-  ___swap___
-etc.
+  ___pop___  
+swap:  
+  ___swap___  
+etc.  
 
 ## More Info
 All files are formatted in Betty style and checked using betty-style.pl and betty-doc.pl
