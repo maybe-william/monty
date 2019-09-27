@@ -11,7 +11,7 @@ void add(stack_t **head, unsigned int linum)
 	int y = 0;
 	int z = 0;
 
-	if (!head || !(dlistint_len(*head) > 2))
+	if (!head || !(dlistint_len(*head) >= 2))
 	{
 		add_error(linum);
 		last_status(-1);
